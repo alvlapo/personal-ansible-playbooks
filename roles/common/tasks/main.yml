@@ -1,0 +1,23 @@
+- name: creating group for main user
+  group:
+    name: "{{ my_name }}"
+    state: present
+  tags: users  
+
+- name: creating main user
+  user:
+    name: "{{ my_name }}"
+    group: "{{ my_name }}"
+    state: present
+    password: "{{ my_passwd | password_hash('sha512', my_salt) }}"
+    shell: /bin/bash
+  tags: users
+
+- name: copying sudoers configuration for {{ my_name }}
+  template:
+    src: etc/sudoers.d/security.j2
+    dest: "/etc/sudoers.d/{{ my_name }}"
+    owner: root
+    group: root
+    mode: 0440
+  tags: users
