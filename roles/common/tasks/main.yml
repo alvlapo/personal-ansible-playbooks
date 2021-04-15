@@ -2,5 +2,7 @@
 - block:
   - import_tasks: packages.yml
   - import_tasks: users.yml
+  - import_tasks: dotfiles.yml
+  
   rescue:
     - set_fact: task_failed=true

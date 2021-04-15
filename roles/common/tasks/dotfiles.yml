@@ -1,0 +1,21 @@
+- name: creating config directories
+  tags: dotfiles,users
+  file:
+    path: /home/{{ my_name }}/.config/{{ item.dir }}
+    state: directory
+    owner: "{{ my_name }}"
+    group: "{{ my_name }}"
+    mode: 0700
+  with_items:
+    - { dir: 'fish/functions' }
+
+- name: copying individual fish config files
+  tags: dotfiles,fish
+  copy:
+    src: fish/functions/{{ item.src }}
+    dest: /home/{{ my_name }}/.config/fish/functions/{{ item.src }}
+    owner: "{{ my_name }}"
+    group: "{{ my_name }}"
+    mode: 0600
+  with_items:
+    - { src: 'please.fish' }
