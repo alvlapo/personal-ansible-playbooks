@@ -1,0 +1,14 @@
+---
+- name: instaling utility packages
+  package:
+    state: latest
+    name:
+      - curl
+      - wget
+      - fish
+
+- name: removing unneeded packages
+  package:
+    state: absent
+    name:
+      - cowsay
