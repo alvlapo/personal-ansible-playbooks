@@ -1,5 +1,6 @@
 ---
 - block:
+  - import_tasks: checks.yml
   - import_tasks: packages.yml
   - import_tasks: users.yml
   - import_tasks: dotfiles.yml

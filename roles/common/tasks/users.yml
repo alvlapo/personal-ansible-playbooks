@@ -1,10 +1,10 @@
-- name: creating group for main user
+- name: creating group for main user {{ my_name }}
   group:
     name: "{{ my_name }}"
     state: present
   tags: users  
 
-- name: creating main user
+- name: creating main user {{ my_name }}
   user:
     name: "{{ my_name }}"
     group: "{{ my_name }}"

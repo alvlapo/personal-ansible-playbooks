@@ -1,0 +1,4 @@
+- name: preparing configurations
+  fail: 
+    msg="Unable to find settings. Please, specify JSON config (-e @config/local.json)."
+  when: (my_name is not defined)
