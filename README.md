@@ -1,4 +1,4 @@
-# personal ansible playbooks
+# Personal Ansible Playbooks
 Ansible configuration that I use for workstations and servers
 
 ## Warning 
