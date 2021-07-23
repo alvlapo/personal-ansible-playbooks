@@ -13,6 +13,13 @@
     shell: /bin/fish
   tags: users
 
+- name: Add SSH public key
+  authorized_key:
+    user: "{{ my_name }}"
+    state: present
+    key: "{{ my_pubkey }}"
+  tags: users
+
 - name: copying sudoers configuration for {{ my_name }}
   template:
     src: etc/sudoers.d/security.j2

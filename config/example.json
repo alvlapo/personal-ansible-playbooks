@@ -1,5 +1,6 @@
 {
     "my_name": "user",
     "my_passwd": "123456",
-    "my_salt": "qwerty"
+    "my_salt": "qwerty",
+    "my_pubkey": "<pubkey>"
 }

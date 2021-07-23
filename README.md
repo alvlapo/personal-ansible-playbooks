@@ -10,6 +10,7 @@ Please don't directly use this against your own machines, as it is something I d
     * `my_name` - my user name
     * `my_passwd` - a password for my user
     * `my_salt` - a salt for password hashing
+    * `my_pubkey` - a public ssh key
 
 ## Run a playbook
 ```
