@@ -2,3 +2,8 @@
   become: true
   roles:
     - common
+
+- hosts: workstation
+  become: true
+  roles:
+    - workstation

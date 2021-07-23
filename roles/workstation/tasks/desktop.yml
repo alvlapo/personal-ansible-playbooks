@@ -1,0 +1,15 @@
+---
+# tasks for desktop environments
+
+- name: Install Gnome desktop
+  dnf:
+    name: "@gnome-desktop"
+    state: present
+  tags: DE
+
+- name: Change default target to graphical.target
+  file:
+    src: /usr/lib/systemd/system/graphical.target
+    dest: /etc/systemd/system/default.target
+    state: link
+  tags: DE

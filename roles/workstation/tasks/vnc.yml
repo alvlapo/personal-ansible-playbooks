@@ -1,0 +1,77 @@
+---
+
+- name: Instaling TigerVNC server
+  dnf:
+    state: present
+    name:
+      - tigervnc-server
+      - tigervnc-server-module
+  tags: VNC
+
+- name: Ensure that VNC uses X.org instead of Wayland
+  lineinfile:
+    dest: /etc/gdm/custom.conf
+    regexp: '^#WaylandEnable='
+    line: 'WaylandEnable=False'
+  tags: VNC
+
+- name: Check if VNC password is already exists
+  stat:
+    path: /home/{{ my_name }}/.vnc/passwd
+  become: true
+  register: vnc_passwd_file
+  tags: VNC
+
+- name: Create .vnc directory
+  file:
+    group: "{{ my_name }}"
+    mode: 0755
+    owner: "{{ my_name }}"
+    path: /home/{{ my_name }}/.vnc
+    state: directory
+  become: true
+  when: not vnc_passwd_file.stat.exists
+  tags: VNC
+
+- name: Set default VNC password
+  shell: |
+    set -o pipefail
+    echo {{ my_passwd }} | vncpasswd -f > /home/{{ my_name }}/.vnc/passwd
+  become: true
+  when: not vnc_passwd_file.stat.exists
+  tags: VNC
+
+- name: Set permission for VNC password file
+  file:
+    group: "{{ my_name }}"
+    mode: 0600
+    owner: "{{ my_name }}"
+    path: /home/{{ my_name }}/.vnc/passwd
+  become: true
+  tags: VNC
+
+- name: Append user account to VNC service
+  lineinfile:
+    path: /etc/tigervnc/vncserver.users
+    line: :1={{ my_name }}
+  become: true
+  tags: VNC
+
+- name: Append default desktop and screen resolution to VNC service
+  blockinfile:
+    path: /etc/tigervnc/vncserver-config-defaults
+    block: |
+      session=gnome
+      geometry=1280x1024
+    backup: false
+  become: true
+  tags: VNC
+
+- name: Start and enable VNC service
+  systemd:
+    daemon_reload: true
+    enabled: true
+    state: started
+    name: vncserver@:1.service
+  become: true
+  tags: VNC

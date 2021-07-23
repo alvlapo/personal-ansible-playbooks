@@ -1,0 +1,5 @@
+---
+# tasks file for desktop
+- block:
+  - import_tasks: desktop.yml
+  - import_tasks: vnc.yml
