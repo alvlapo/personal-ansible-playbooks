@@ -2,7 +2,7 @@
   group:
     name: "{{ my_name }}"
     state: present
-  tags: users  
+  tags: users
 
 - name: creating main user {{ my_name }}
   user:
